@@ -1,0 +1,20 @@
+{
+  "name": "omni-fetch",
+  "version": "1.0.0",
+  "description": "OmniFetch v2.0 - Utilitário moderno de extração e conversão de mídias (YouTube, TikTok sem watermark, Instagram) em MP3 e MP4.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

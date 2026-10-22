@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniFetch — Utilitário de Download e Conversão de Mídia</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="omni_icon.png">
+
+  <!-- Typography: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <!-- Ambient Cosmic Star Flares with Gentle Breathing -->
+  <div class="stars-bg"></div>
+  <div class="flare-container">
+    <div class="flare-orb orb-purple"></div>
+    <div class="flare-orb orb-violet"></div>
+  </div>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="brand">
+        <img src="omni_logo_horizontal.png" alt="OmniFetch" class="brand-logo-img">
+        <span class="brand-version">v2.0</span>
+      </div>
+
+      <div class="navbar-status">
+        <span class="status-indicator">
+          <span class="status-dot"></span>
+          <span class="status-text">Motor yt-dlp Local Ativo</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-wrapper">
+    <div class="content-container">
+      
+      <!-- Hero Headline -->
+      <section class="hero-section">
+        <h1 class="hero-title">Download e Conversão de Mídia</h1>
+        <p class="hero-subtitle">
+          Baixe conteúdos do <strong>YouTube</strong>, <strong>Instagram Reels</strong> e <strong>TikTok sem marca d'água</strong> com fidelidade original e alta velocidade.
+        </p>
+      </section>
+
+      <!-- Main Application Card -->
+      <div class="app-card">
+        
+        <!-- SECTION 1: FORM -->
+        <section id="form-section" class="card-section active">
+          <!-- Input Bar with Paste Button -->
+          <div class="field-group">
+            <div class="field-label-row">
+              <label for="video-url">URL do Vídeo ou Áudio</label>
+              <span class="field-hint">Cole links públicos de qualquer plataforma compatível</span>
+            </div>
+
+            <div class="input-container">
+              <i data-lucide="link-2" class="input-icon-left"></i>
+              <input 
+                type="text" 
+                id="video-url" 
+                placeholder="Cole o link aqui (ex: https://www.instagram.com/reel/...)" 
+                autocomplete="off"
+                spellcheck="false"
+              >
+              <div class="input-actions">
+                <button type="button" id="clear-btn" class="icon-btn hidden" title="Limpar campo">
+                  <i data-lucide="x" class="action-icon"></i>
+                </button>
+                <button type="button" id="paste-btn" class="btn-paste" title="Colar da área de transferência">
+                  <i data-lucide="clipboard" class="btn-icon-sm"></i>
+                  <span>Colar</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Platform Indicators -->
+            <div class="platform-chips">
+              <span class="platform-chip" data-platform="youtube">
+                <i data-lucide="youtube" class="chip-icon"></i>
+                <span>YouTube</span>
+              </span>
+              <span class="platform-chip" data-platform="instagram">
+                <i data-lucide="instagram" class="chip-icon"></i>
+                <span>Instagram Reels</span>
+              </span>
+              <span class="platform-chip" data-platform="tiktok">
+                <i data-lucide="music-2" class="chip-icon"></i>
+                <span>TikTok <span class="sub-badge">Sem Marca</span></span>
+              </span>
+              <span class="platform-chip" data-platform="generic">
+                <i data-lucide="globe" class="chip-icon"></i>
+                <span>+1000 sites</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Configuration Controls -->
+          <div class="controls-grid">
+            <!-- Format Selector -->
+            <div class="control-block">
+              <label class="control-label">Formato Desejado</label>
+              <div class="segmented-control" id="format-select">
+                <button type="button" class="segment-btn active" data-value="mp3">
+                  <i data-lucide="headphones" class="segment-icon"></i>
+                  <span>Áudio (.mp3)</span>
+                </button>
+                <button type="button" class="segment-btn" data-value="mp4">
+                  <i data-lucide="film" class="segment-icon"></i>
+                  <span>Vídeo (.mp4)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Quality Selector -->
+            <div class="control-block">
+              <label class="control-label">Nível de Qualidade</label>
+              <div class="segmented-control" id="quality-select">
+                <button type="button" class="segment-btn active" data-value="high">
+                  <span id="quality-label-high">320 kbps</span>
+                  <span class="quality-tag">Alta</span>
+                </button>
+                <button type="button" class="segment-btn" data-value="medium">
+                  <span id="quality-label-medium">192 kbps</span>
+                  <span class="quality-tag">Média</span>
+                </button>
+                <button type="button" class="segment-btn" data-value="low">
+                  <span id="quality-label-low">128 kbps</span>
+                  <span class="quality-tag">Baixa</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit CTA Button -->
+          <button id="convert-btn" class="btn btn-primary btn-cta">
+            <i data-lucide="arrow-down-to-line" class="btn-icon"></i>
+            <span>Processar e Baixar</span>
+          </button>
+        </section>
+
+        <!-- SECTION 2: PROGRESS -->
+        <section id="progress-section" class="card-section">
+          <!-- Video Info Header Card -->
+          <div id="video-info" class="meta-preview-card hidden">
+            <div class="thumb-container">
+              <img id="video-thumbnail" src="" alt="Thumbnail" class="media-thumb">
+              <span id="video-length" class="duration-badge">0:00</span>
+            </div>
+            <div class="meta-details">
+              <div class="meta-top">
+                <span id="video-platform" class="platform-tag">Mídia</span>
+              </div>
+              <h3 id="video-title" class="meta-title">Carregando detalhes do vídeo...</h3>
+            </div>
+          </div>
+
+          <!-- Indeterminate Spinner for initial metadata extraction -->
+          <div id="metadata-loader" class="loader-box">
+            <div class="spinner-circle"></div>
+            <p id="loader-text" class="loader-message">Consultando metadados na plataforma...</p>
+          </div>
+
+          <!-- Download Progress Metrics -->
+          <div id="download-progress-container" class="progress-box hidden">
+            <div class="progress-bar-track">
+              <div id="progress-bar" class="progress-bar-value" style="width: 0%"></div>
+            </div>
+
+            <div class="progress-meta-row">
+              <span id="download-status" class="status-phase">Iniciando download...</span>
+              <span id="progress-percent" class="mono-percent">0%</span>
+            </div>
+
+            <div class="metrics-grid">
+              <div class="metric-item">
+                <span class="metric-label">Taxa de Transferência</span>
+                <span id="stat-speed" class="metric-value mono">-- MB/s</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Tempo Restante</span>
+                <span id="stat-eta" class="metric-value mono">--:--</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: SUCCESS -->
+        <section id="success-section" class="card-section">
+          <div class="feedback-layout">
+            <div class="feedback-badge success">
+              <i data-lucide="check" class="feedback-icon"></i>
+            </div>
+            
+            <div class="feedback-text">
+              <h2 class="feedback-title">Arquivo Pronto</h2>
+              <p id="success-message" class="feedback-desc">O processamento foi concluído com sucesso e o arquivo foi gravado no seu disco local.</p>
+            </div>
+
+            <div class="result-actions">
+              <a id="download-link" href="#" class="btn btn-primary" download>
+                <i data-lucide="download" class="btn-icon"></i>
+                <span>Salvar Arquivo</span>
+              </a>
+              <button id="copy-link-btn" class="btn btn-secondary">
+                <i data-lucide="copy" class="btn-icon"></i>
+                <span>Copiar Link Local</span>
+              </button>
+              <button id="new-convert-btn" class="btn btn-ghost">
+                <i data-lucide="rotate-ccw" class="btn-icon"></i>
+                <span>Converter Outro Link</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: ERROR -->
+        <section id="error-section" class="card-section">
+          <div class="feedback-layout">
+            <div class="feedback-badge error">
+              <i data-lucide="alert-circle" class="feedback-icon"></i>
+            </div>
+
+            <div class="feedback-text">
+              <h2 class="feedback-title">Falha no Processamento</h2>
+              <p id="error-message" class="feedback-desc">Não foi possível completar o download. Verifique se o link é público e tente novamente.</p>
+            </div>
+
+            <button id="retry-btn" class="btn btn-primary">
+              <i data-lucide="rotate-ccw" class="btn-icon"></i>
+              <span>Tentar Novamente</span>
+            </button>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Recent Downloads History Section -->
+      <section id="history-section" class="history-container hidden">
+        <div class="history-header">
+          <div class="history-title-wrap">
+            <i data-lucide="history" class="history-icon"></i>
+            <h2 class="history-title">Downloads Desta Sessão</h2>
+          </div>
+          <button id="clear-history-btn" class="btn-text" title="Limpar histórico local">
+            <i data-lucide="trash-2" class="btn-icon-xs"></i>
+            <span>Limpar Histórico</span>
+          </button>
+        </div>
+        <div id="history-list" class="history-list"></div>
+      </section>
+
+      <!-- Footer with Architecture Guarantee -->
+      <footer class="app-footer">
+        <div class="footer-guarantee">
+          <i data-lucide="shield-check" class="guarantee-icon"></i>
+          <span>Processamento local independente via <strong>yt-dlp</strong> e <strong>FFmpeg</strong>. Nenhum dado ou mídia é enviado a servidores externos.</span>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- Modal Dialog System for Choices -->
+  <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div id="modal-icon-wrap" class="modal-icon-badge warning">
+          <i id="modal-icon" data-lucide="help-circle"></i>
+        </div>
+        <div class="modal-text">
+          <h3 id="modal-title" class="modal-title">Confirmação</h3>
+          <p id="modal-message" class="modal-message">Mensagem da modal.</p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="modal-cancel-btn" class="btn btn-secondary">Cancelar</button>
+        <button type="button" id="modal-confirm-btn" class="btn btn-primary">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container for Informative Notifications -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Logic Script -->
+  <script src="main.js"></script>
+</body>
+</html>
